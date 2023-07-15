@@ -1,0 +1,285 @@
+
+⭐ CSS 뜻과 작동 방식
+✅CSS : Cascading Style Sheet
+✅Cascading : 위에서 아래로 내려오는 이미지(폭포가 흐르는 것 떠올리기)
+✅어떤 것 다음에 어떤 것이 온다 이것이 cascading이 의미하는 바다.
+✅브라우저가 CSS 코드를 읽을 때 cascading 방식으로, 즉 위에 있는 코드부터 차례차례로 읽힌다.
+
+
+⭐⭐⭐box model⭐⭐⭐
+✅모든 box는 block 속성을 가짐.
+⚠️ex <h1></h1>,<div></div>,<section></section>, <main></main>, <header></header>, <p></p>
+
+✅옆에 다른요소가 올 수 없는것을 block
+✅옆에 다른 요소가 올 수 있는 것이 inline
+⚠️ex <span></span>, <img src="" alt="">, <a href=""></a>, <code></code> 등등등
+
+✅display 속성을 사용해서 각 요소의 block과 inline 속성을 변경할 수 있음
+✅inline은 너비와 높이가 없음. 그래서 div에 inline 속성을 주면 사라지거나 글씨 크기만큼만 존재함
+
+
+⭐margin : box border로부터 바깥에 있는 공간
+<style>
+    body {
+        margin: 20px 5px 12px 99px;
+        background-color: thistle;
+    }
+    div {
+        height: 150px;
+        width: 150px;
+        background-color: white;
+        margin: 50px 15px;
+    }
+</style>
+⭐여기서 <div></div>의 margin top bottom을 50px로 설정했는데 <body></body>에 margin이 50px 적용된 것처럼 움직임
+이 현상을 ⭐collapsing margins 이라 함
+⭐collapsing margins : box의 경계(위,아래쪽만 일어남)가 같다면 두 margin이 하나의 margin으로 취급됨
+
+이를 해결하기 위해 padding이란 개념을 알아야 함
+
+⭐padding : box border로부터 안쪽에 있는 공간
+⭐boder : 주로 soild만 씀. 나머진 안이뻐서..
+⭐inline과 block 모두에 적용됨
+
+⭐그렇다면 margin과 padding도 inline에 적용이 될까? 정답은 적용됨!
+다만, inline은 높이와 너비가 없어서 margin은 좌우에만 적용디고 padding은 사방에 다 적용됨
+
+
+⭐class와 id의 차이
+✅id는 무조건 하나만 쓸 수 있음. 다른 요소랑 겹치는 id가 있으면 안됨
+✅class는 여러 요소들에서 사용할 수 있고 하나의 요소에 여러 class명을 사용할 수 있음
+⚠️예시
+<span class="tomato">hello</span>
+<span>hello</span>
+<span class="tomato honey potato">hello</span>
+<span>hello</span>
+
+
+⭐inline-block으로 display 속성값을 주면
+✅width와 height 값을 가질 수 있으나 단점이 많음
+✅먼저 default값을 가진다는게 문제임. margin값을 주지 않아도 요소 간 공간이 생김
+✅또 정해진 형식이 없다는 단점이 있음
+✅가장 큰 단점은 반응형 디자인을 지원하지 않음. 창 크기에 따라 영향을 받음
+
+------------------------------------------
+이런 문제를 해결하기 위해 등장한게
+⭐flexbox
+
+✅ 규칙 1. 자식 element에는 어떤 것도 적지 말고 부모 element를 flex container로 만들고 거기에만 적어야함
+display: flex; 로 부모 element가 자식 element를 제어
+그러고 나면 다른 많은 속성들을 수정할 수 있음
+
+⚠️그 중 justify-content : flex-start가 기본값, space-evenly는 빈 공간을 같은 크기로 나누어서 배치함
+space-beetwin 등
+주축에 적용됨
+
+⚠️반면 align-items는 교차축에 적용됨
+교차축이 수직방향일 때 만약 flex-container element에 height가 없다면
+align-items을 설정해도 반영되지 않음 이미 맨 위아래를 차지하고 중심에 있기 때문인데
+flex-container에 height를 추가해주면 됨
+이때 단위를 vh로 쓰면 화면크기에 따라 바뀜
+
+⚠️ vh는 viewport height를 말하는데 viewport를 screen으로 이해해도 됨
+즉 100 screen height는 화면 높이의 100%를 말함
+
+✅ 규칙 2. 주축(main axis)과 교차축(cross axis)
+일반적으로 주축은 수평, 교차축은 수직임
+주축이 수직, 교차축이 수평일 수 있기 때문에 일반화하면 안됨
+
+⚠️주축과 교차축 방향을 바꾸려면
+flex-direction을 사용하며 기본값은 당연히 row
+row는 수평, colmn은 수직이라는 뜻
+기본적으로 row는 좌에서 우
+colmn은 위에서 아래 방향이기 때문에
+row-reverse는 우에서 좌, colmn-reverse는 아래서 위
+
+⚠️ <div>1</div>에
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 로 스타일을 넣어주면 1이라는 숫자가 div라는 flex컨테이너 가운데 위치하게 됨
+
+⚠️ wraping은 화면크기가 달라짐에 따라 박스의 위치가 변하는 것
+flex-wrap: wrap로 설정할 수 있음
+한줄에 들어가는 만큼 최대한 집어넣고 그게 되지 않으면 다음 줄로 옮김
+기본값인 nowrap은 박스들의 위치가 바뀌지 않음
+
+⭐Position
+레이아웃보다는 위치를 아주 조금 위로, 아주 조금 오른쪽 등으로 옮기고 싶을 때 사용
+
+⚠️ fixed : 스크롤을 이동해도 고정된 자리에 계속 위치해있음
+초기 위치는 처음 박스가 위치한 곳으로 주변 박스에 영향을 미치지 않는데
+top, bottom, right, left라는 프로퍼티 중에서 하나만 수정해도
+다른 박스는 신경쓰지 않고 그 박스들의 위에 있음
+
+⚠️ rleative : element가 처음 위치한 곳을 기준으로 수정
+조금씩 이동할 때 유용함
+<div>
+    <div class="green"></div>
+</div>
+에
+div {
+    color: black;
+    width: 300px;
+    height: 300px;
+    background-color: wheat;
+    
+  }
+  .green {
+    background-color: teal;
+    width: 100px;
+    position: relative;
+    top: -10px;
+    left: -10px;
+    height: 100px;
+  }
+  스타일을 주면 teal 색상 박스가 wheat색상 박스 위와 왼쪽에 튀어나오게 됨
+
+  ⚠️ absolute : top,bottom, left, right를 쓰고 싶을 때 사용
+  특성은 가장 가까운 relative 부모를 기준으로 이동시켜줌
+  만약 부모요소에 relative가 아니라면 그보다 위를 찾다가 없으면 body를 기준으로 함
+
+  ⚠️⚠️ absolute와 relative가 가장 중요
+  absolute를 많이 사용하고 그러기 위해선
+  부모가 relative여야 하는 것 잘 기억!
+
+  ⭐ Pseudo Selectors(가상선택자)
+  좀 더 세부적으로 엘리먼트를 선택하는 방법임
+
+  ✅first-child or last-child
+  ✅nth-child(n), nth-child(3n + 1)
+  ✅nth-child(even) 짝수번 째의 span을 선택(even이 짝수 odd가 홀수)
+  ✅부모태그 > 자식태그도 가능하나 바로 직계 자식이어야 함
+  ✅p+span → p태그 다음에 오는 span 선택, 이건 부모자식 관계가 아니라 형제 관계여야 가능
+  ✅p~span → 형제관계인데 p태그 바로 뒤에 span태그가 오지 않을 때 사용
+  ✅input:required → input 태그 내 속성 선택 
+  ✅input[type="password"] → 속성을 이용해 선택
+  ✅input[placeholder~="name"] → input태그 내 placeholder속성이 name이란 값을 포함하고 있는(~=) placeholder
+  
+
+  ⭐ states
+  ✅  selector :hover, selector :active, selector :foucs, selector :visited, selector :foucs-within 등등
+  ✅  hover 효과는 마우스 커서가 해당 selector에 위치했을때,
+  ✅  active는 마우스로 선택 했을 때,
+  ✅  foucs는 키보드로 선택 했을때,
+  ✅  visited는 링크에만 적용
+  ✅  foucs-within은 다른 states와 달리 부모에 적용됨
+  즉, focused 상태인 자식을 가진 부모 element에 적용
+  ✅  state를 다른 element와 연계해서 사용가능
+      ⚠️ 예를 들어 form:hover input {
+            background-color : seagreen;}는 form이 hover 상태가 되었을 때 input의 배경색이 seagreen이 되도록 해라 라는 의미
+
+
+  ⭐ Pesudo element
+  ✅ ::placeholder은 placeholder를 스타일 할 수 있게 해줌
+  ✅ ::selection은 텍스트를 선택하면 설정해놓은 스타일이 적용됨
+  ✅ ::first-letter는 지정한 선택자의 첫번째 문자를 대문자로 바꿀 수 있음
+
+
+  ⭐ color system
+  ✅hexa코드
+  ✅rgba : a는 투명도 0~1의 값
+  
+  
+  ⭐css에서의 변수
+  ✅css에서의 변수는 dash 2개 다음에 변수 이름, 빈공간이 있다면 -로 채워줌
+  ✅:root는 기본적으로 모든 document의 뿌리
+  ✅그러므로
+  :root{
+    --main-color: #fcce00;
+  }는 이 웹페이지의 기본 컬러는 #fcce00이라는 의미
+  ⚠️예시로 p {
+    background-color: var(--main-color);
+  }와 같이 사용 가능
+  ⚠️color에만 적용되는 것이 아니고 border 등에도 사용 가능함
+
+-----------advanced css------------------------
+
+⭐ Transition
+✅어떤 상태에서 다른 상태로의 변화를 애니메이션으로 만드는 방법
+✅⭐⭐변화를 주는 state 과 사용하는데 state가 없는 요소에 붙어야 함
+✅transition: 어떤 것을 변화하게 만들지, 얼마동안 변화가 일어나게 할지, ease-in-out은 나중에 설명
+⚠️예시:  transition: background-color 10s ease-in-out;
+✅더 많은 transition을 추가할 수도 있음
+⚠️예시:  transition: background-color 10s ease-in-out, color 5s ease-in-out;
+✅ease-in function은 브라우저에게 애니메이션이 어떻게 변할지 알려줌. 기본값은 linear, ease-in, ease-in-out, ease-out
+✅그 외 cubic-bezier는 나만의 커브를 만들 수 있도록 해줌
+✅위 기능은 matthewlein.com에서 어떻게 작용하는지 확인 가능
+
+⭐ Transformations
+✅무언가를 변형시킨다는 의미 rotate, scale, skew, translate 등등 속성이 있음
+✅rotateZ(80deg) Z축을 기준으로 80도 회전,scale(4, 2) X축기준 4배 Y축기준 2배 크게, translateX(-60px) x축기준 왼쪽으로 60px이동
+✅만약 tranlate로 img를 옮기는 위치에 형제 요소(인라인 속성을 가진)가 있다면 그냥 인라인 요소 위에 위치함
+✅중요한 점은 transformation은 box element를 변형시키지 않고 margin, padding이 적용되지 않음 일종의 3D transformation이기 때문에
+✅우리는 margin과 padding을 위해서 translateX, translateY를 사용하지 않음
+✅다른 요소의 box를 변형시키지 않고 원하는 요소를 이동시키기 위해서 사용
+⚠️transition과의 결합 예시: img {
+    border: 5px solid black;
+    border-radius: 50%;
+    transition: transform 5s ease-in-out;}
+  img:hover {
+    transform: rotateZ(90deg);}
+
+
+⭐Animations
+✅state에 의한 애니메이션 말고 만약 계속 재생되는 애니메이션을 얻고 싶으면 어떻게 해야 할까
+✅keyframes에는 2가지 옵션이 있음 : from, to / 0~100%
+✅애니메이션을 만들기 위한 규칙은
+⚠️@keyframes sexyAnimations(내 애니메이션의 이름) {}
+⚠️어느 한지점부터 다른 한지점까지의 애니메이션을 만들고 싶다 
+→ @keyframes sexyAnimations {
+    from{
+        transform:rotateX(0);
+    }
+    to{
+        transform: rotateX(360deg) translateX(100px);
+    }
+}
+img {
+    animation: sexyAnimations 5s ease-in-out infinite;
+}
+여기까지가 애니메이션을 만드는 기본적인 방법
+⚠️이때 문제가 하나 발생하는데 제자리에서 x축을 기준으로 360도 회전하면서 x축기준 오른쪽으로 100px을 이동하는데
+다시 제자리로 돌아올때는 애니메이션이 없어서 점프를 함
+
+⚠️이런걸 해결하기 위해서
+→      @keyframes sexyAnimations {
+    0%{
+        transform:rotateX(0);
+    }
+    50%{
+        transform: rotateX(360deg) translateX(100px);
+    }
+    100%{
+      transform:rotateX(0);
+    }
+}
+img {
+    animation: sexyAnimations 5s ease-in-out infinite;
+} 와 같은 식으로 표현식 변경, 애니메이션이 원래자리로 돌아오게끔 함
+0~100% 사이 아무 스텝, 몇가지든 사용 가능함
+
+⚠️단, 몇몇 프로퍼티는 애니메이션으로 만들지 못하는데 ex. font-size 등등
+⚠️참고사이트 : https://animista.net
+
+
+⭐ Media Queries
+✅오직 css만을 이용해서 사용자의 스크린의 사이즈를 알 수 있는 방법
+✅그리고 스크린의 사이즈에 따라 우리의 css를 변경하는 방법
+⚠️    @media screen and (max-width: 400px){
+    div {
+      background-color: tomato;
+    }
+  } 이게 의미하는건 이 스크린의 너비가 400px보다 작으면
+   div태그의 배경색을 토마토 색으로 바꿔줘
+
+⚠️또는     @media screen and (min-width: 600px) and (max-width: 750px){
+    div {
+      background-color: tomato;
+    }
+  }는 div의 너비가 600px과 750px사이에 있을 때만 적용
+
+⚠️ and (orientation: landscape) 이 구문은 만약 휴대폰이나 기타 기기가 가로모드일 때라는 의미
+and (orientation: portrait) 은 세로모드로 인식할 수 있음
+how cool is it!!

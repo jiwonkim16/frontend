@@ -1,0 +1,93 @@
+⭐<!DOCTYPE html>
+브라우저에게 이건 text파일이 아니라 html문서라는 것을 알려줌
+
+⭐<html lang="en">
+html에서 사용하는 주로 사용하는 언어가 영어라는 의미이며, kr은 한국어.
+
+<html>
+    <head></head>
+    <body>
+        
+    </body>
+</html>
+
+헤드태그-------------------------------------------
+⭐<meta>
+✅meta는 부가적인 정보라는 뜻.
+✅head태그 안에 존재. self closing 태그.
+✅두개의 attribute를 가지고 있음
+
+<meta name="description" content="this is my website">
+<meta charset="utf-8">
+✅브라우저에게 text 를 어떻게 그려달라는지 알려주는 태그
+
+⭐<meta property="og:image" content="이미지 주소"> <meta property="og:url" content="url">
+<meta property="og:title" content="타이틀 값">
+<meta property="og:description" content="desc 내용">
+✅이 og태그들은 남에게 공유될때 보여지는 내 website의 정보.
+
+⭐<link rel="shortcut icon" href="이미지 주소">
+✅를 통해서 웹페이지 타이틀 옆에 이미지를 넣을 수 있음. rel은 관계라는 뜻
+
+바디태그------------------------------------------
+⭐<ol>
+    <li>beer</li>
+    <li>meat</li>
+    <li>milk</li>
+</ol>
+✅on un의 차이로 ol, ul 구분
+
+
+⭐<a href="" target="_blank"></a>
+✅앵커 태그에서 타켓의 기본값은 self인데 blank로 바꾸면 하이퍼링크 클릭 시 별도 창의 생김
+
+
+⭐<img src="" alt="">
+✅닫는 태그가 없는 self closing 태그
+✅src에는 url뿐만 아니라 파일주소도 가능. alt는 이미지에 대한 설명.
+
+
+⭐<form action="">
+    <input type="text" placeholder="성" required>
+    <input type="text" placeholder="이름" disabled required>
+    <input type="text" placeholder="사용자" required>
+    <input type="pasword" placeholder="비밀번호" required minlength="10">
+    <input type="submit" value="저장">
+    <input type="color">
+    <input type="file" accept=".pdf">
+</form>
+✅form태그 안에 쓸 수 있는 태그도 여러개 있음. 그 중 가장 많이 사용하는게 input태그
+✅input태그에 쓰는 type 종류도 매우 많음. mdn자료 참고.
+
+
+⭐<form action="">
+    <label for="website">Website</label>
+    <input id="website" type="url" placeholder="url" required>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="url" required>
+    <input type="submit" value="저장">
+</form>
+✅label이라는 태그는 ?를 표시해주는 태그이면서
+✅input과 같이 쓰여야 하며, for 값이 input의 id값과 같아야 함
+
+
+⭐<span>짧은 text를 위한 태그</span>
+✅요소 자체로는 아무의미가 없음(none-semantic)
+
+⭐<div></div>
+✅division 분할이라는 단어에서 나온 태그
+✅div를 박스라고 생각해도 됨. block 속성을 가지고 있음. 
+✅문서를 보기만해도 그 의미를 짐작할 수 있는 걸 semantic이라고 함.
+✅div는 의미론적으로 봣을땐 아무 의미가 없는 태그임.
+✅예전엔 무분별하게 div 사용했지만 동일한 기능(박스)을 갖고 잇으면서 의미적으로 해석가능한 태그들을 많이 사용함.
+
+
+⭐div를 대체하는 태그들.(html semantic태그)
+✅<header>머리말</header>
+✅<main>주요 내용</main>
+✅<footer>꼬리말</footer>
+✅<address>123 Road alvasta</address>
+✅<nav>네비게이션을 위한</nav>
+✅<section>웹의 일부분들을 묘사</section>
+✅<aside></aside> 등
