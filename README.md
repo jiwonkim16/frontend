@@ -1,3 +1,3 @@
 # frontend
 
-commit code
+Html & Css are so much fun!
