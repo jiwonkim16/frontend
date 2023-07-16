@@ -1,0 +1,15 @@
+/*리셋 css란 대부분의 태그에 margin, padding, border 값이 0으로 된 css파일을 뜻함*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
+
+@import "reset.css";
+@import "variables.css";
+
+/*Components*/
+@import "components/status-bar.css";
+
+/*Screens*/
+@import "screens/login.css";
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}

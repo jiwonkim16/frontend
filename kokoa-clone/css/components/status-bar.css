@@ -1,0 +1,26 @@
+.status-bar {
+    display: flex;
+    /*justify-content: space-between;로는 div서로 크기가 다르기 때문에 정확히 시계가 정확히 가운데 오지 않음. 가운데 정렬을 위해 쓰는 css hack이라는 레시피 사용*/
+    /*컨테이너에 justify-content: center; 각 div에 width : 33% 그리고 2번째 div에 flex속성부여, 주축 기준 가운데 정렬, 3번째div는 주축기준 flex-end정렬*/
+    justify-content: center;
+    padding: 5px 3px;
+}
+.status-bar__column{
+    width : 33%;
+}
+.status-bar__column:first-child span {
+    margin-right: 5px;
+}
+.status-bar__column:nth-child(2) {
+    display: flex;
+    justify-content: center;
+}
+.status-bar__column:last-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.status-bar__column .fa-battery-full{
+    margin: 0px 5px;
+}

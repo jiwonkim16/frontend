@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Kokoa Talk</title>
+    <link rel="stylesheet" href="/kokoa-clone/css/style.css">
+</head>
+<body>
+    <div class="status-bar"> <!--BEM이라는 규칙을 따라 class명 작성, id보다 class name을 주기로 개발자들끼리 약속--><!--일일이 id인지 class인지 찾지 않아도 됨-->
+        <div class="status-bar__column">
+            <span>NO Service</span>
+            <i class="fa-solid fa-wifi"></i> <!--icon class name은 사이트에서 정해준대로..임의로 바꾸면 icon적용x-->
+            <!--Heroicons 또는 FontAwesome(여기가 더 좋은듯)이라는 사이트에서 icon검색 및 가져오기!! -->
+        </div>
+        <div class="status-bar__column">
+            <span>18:43</span>
+        </div>
+        <div class="status-bar__column">
+            <span>110%</span>
+            <i class="fa-solid fa-battery-full fa-2x"></i> <!--fontawesome에 아이콘 크기 조절 옵션 : ex) fa-2x와 같이-->
+            <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+    </div>
+
+    <header class="welcome-header">
+        <h1 class="welcome-header__title">Welcome to Kokoa Clone</h1>
+        <p class="welcome-header__text">If you have a Kakao Accout, log in with your email or phone number.</p>
+    </header>
+
+    <form id="login-form" action="friends.html" method="get">
+        <input name="username" type="text" placeholder="Email or phone number" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <input type="submit" value="Log In">
+        <a href="#">Find Kokoa Account or Password</a>
+    </form>
+    <!--form은 아주 중요한 2가지 attribute를 가지고 있음.
+    1. action   2. method임. 먼저 action은 어떤 페이지로 data를 보낼건지 지정할 수 있음
+    method는 2가지 방식 중 하나를 쓸 수 있음. 하나는 post이고 다른 하나는 get임!
+    post는 백엔드 서버에 정보를 전송하는 방식이기 때문에 지금은 할 수 없고
+    get을 써야하는데 get은 보안에 취약해서 id,password 등 개인정보를 보낼때는 사용하면 안되고
+    url에 포함되어도 상관없는 정보들을 get방식으로 보내야함.!-->
+    
+
+    <script src="https://kit.fontawesome.com/44659a0145.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+.welcome-header {
+    margin: 90px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+}
+.welcome-header__title{
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.welcome-header__text{
+    width: 60%;
+    opacity: 0.7;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    margin:0px 30px;
+}
+
+#login-form input{
+    border: none;
+    font-size: 18px;
+    padding: 15px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#login-form input:not([type="submit"]){ /*[]이 사이에 쓰인 것들은 특성 선택자임. input type이 submit이 아닐때만 border-bottom과 transition이 적용되는 것.
+    아래 :not()설명 참고  */
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    transition: border-color 0.3s ease-in-out;
+
+}
+
+#login-form input::placeholder{  /*pesudo element(가상클래스 선택자)*/
+    color: rgba(0,0,0,0.4)
+}
+
+#login-form input:focus{
+    border-color: var(--yellow);  /*css에서의 변수 선언, variables.css파일 참고, import해주지 않으면 적용x*/
+}
+
+/* css에서 :not() 이란 뭔가가 적용되는 걸 원하지 않았을 때 구문 예시 → body: not(p 또는 .fancy) {text-decoration: underline;}
+p가 아닌 경우에만 또는 fancy라는 클래스를 가지지 않는 경우에만 아래 효과 적용*/
+
+#login-form input[type="submit"]{
+    background-color: var(--yellow);
+    cursor: pointer;
+    padding: 20px 0px;
+    border-radius: 5px;
+}
+
+#login-form a{
+    text-align: center;
+    text-decoration: none;
+    color:inherit; /*inherit는 상속이라는 의미, 즉 a태그가 부모로부터 색을 받아옴. a태그의 default값을 변경햇음*/
+    font-size: 13px;
+}
