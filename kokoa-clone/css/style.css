@@ -1,4 +1,6 @@
 /*리셋 css란 대부분의 태그에 margin, padding, border 값이 0으로 된 css파일을 뜻함*/
+/*import 파일 순서 매우 중요!!!!!*/
+
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
 
 @import "reset.css";
@@ -6,10 +8,23 @@
 
 /*Components*/
 @import "components/status-bar.css";
+@import "components/nav-bar.css";
+@import "components/screen-header.css";
+@import "components/user-component.css";
+@import "components/badge.css";
+@import "components/icon-row.css";
 
 /*Screens*/
 @import "screens/login.css";
+@import "screens/friends.css";
+@import "screens/find.css";
+@import "screens/more.css";
 
 body {
     font-family: 'Open Sans', sans-serif;
+    color: #2e363e;
+}
+
+.main-screen{
+    padding: var(--horizontal-space);
 }

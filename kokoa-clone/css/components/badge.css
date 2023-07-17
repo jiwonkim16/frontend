@@ -1,0 +1,11 @@
+.badge{
+    background-color: tomato;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* text를 가운데 보내기 위해 display:flex ~ align-items:center까지 설정. */
+    color: white;
+    font-weight: 600;
+}

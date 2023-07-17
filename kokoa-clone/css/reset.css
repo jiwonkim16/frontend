@@ -45,3 +45,8 @@ table {
 input:focus{
 	outline: none;
 }
+
+a {
+    color: inherit;
+	text-decoration: none;  /*모든 a태그의 color 기본값은 blue인데 이걸 상속으로 변경하고 underline 또한 삭제*/
+}

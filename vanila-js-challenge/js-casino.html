@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <header>
+        <h1>Random Number Game</h1>
+    </header>
+    <main>
+        <form action="">
+            <label for="generate_number">Generate a number between 0 and</label>
+            <input type="number" required id="generate_number">
+        </form>
+
+        <form action="">
+            <label for="guess_number">Guess the number:</label>
+            <input type="number" required id="guess_number">
+            <input type="submit" value="Play!" class="click_btn">
+        </form>
+        <div id="chose">You chose: <span class="chose_number">17</span>, the machine chose: <span class="machine_number">1</span></div>
+        <div class="game_result" style="font-weight: 700;">You Lose!</div>
+    </main>
+    <script src="/vanila-js-challenge/js-casino.js"></script>
+</body>
+
+</html>

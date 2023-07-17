@@ -1,0 +1,29 @@
+.screen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 25px 25px;
+    margin-bottom: 15px;
+}
+
+.screen-header__title{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.screen-header__icons span{
+    margin-left: 25px;
+}
+
+.screen-header__icons{
+    position: relative;
+}
+.header__gear{
+    background-color: tomato;
+    width: 5px;
+    height: 5px;
+    border-radius: 15px;
+    position: absolute;  /*position: absolute를 쓰려면 부모요소에 position:relative 가 있어야 한다는거 기억!!*/
+    left: 95px;
+    bottom: 15px;
+}
