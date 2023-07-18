@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Kokoa Talk</title>
     <link rel="stylesheet" href="css/style.css">
+    <!--css파일이 적용이 안됬을때 해결방법
+    절대경로 → 상대경로로 수정
+절대 경로 (Absolute Path):
+절대 경로는 파일이나 리소스의 전체 경로를 기술한 것입니다. 웹에서 절대 경로는 도메인 이름부터 시작해서 해당 파일까지의 전체 경로를 포함합니다. 예를 들어, https://example.com/folder1/css/style.css와 같은 형태입니다. 파일시스템에서 절대 경로는 루트 디렉토리부터 시작해서 해당 파일까지의 전체 경로를 포함합니다.
+상대 경로 (Relative Path):
+상대 경로는 현재 파일이나 디렉토리를 기준으로 다른 파일이나 리소스의 위치를 나타냅니다. 상대 경로는 현재 위치에 따라 다르게 해석됩니다. 예를 들어, 같은 프로젝트에서 css/style.css라는 상대 경로를 사용하면 현재 HTML 파일과 같은 디렉토리에 있는 css 폴더의 style.css 파일을 찾게 됩니다.
+상대 경로와 절대 경로의 주요 차이점은 기준점입니다. 절대 경로는 항상 동일한 리소스를 가리키지만, 상대 경로는 현재 파일이나 디렉토리에 따라 가리키는 대상이 달라집니다. 상대 경로를 사용하면, 프로젝트의 구조가 변경되거나 도메인이 변경되어도 올바른 리소스를 찾을 수 있기 때문에 유연성이 높아집니다. 그러나, 상황에 따라 절대 경로를 사용하는 것이 더 적절한 경우도 있습니다.-->
     <script src="https://kit.fontawesome.com/44659a0145.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -42,7 +49,9 @@
     get을 써야하는데 get은 보안에 취약해서 id,password 등 개인정보를 보낼때는 사용하면 안되고
     url에 포함되어도 상관없는 정보들을 get방식으로 보내야함.!-->
     
-
+    <div id="no-mobile">
+        <span>Your screen is too big ㅠㅠ</span>  <!--휴대폰 화면에서만 볼 수 잇도록, 큰화면으론 못보게끔 하려고 함.-->
+    </div>
     
 </body>
 </html>

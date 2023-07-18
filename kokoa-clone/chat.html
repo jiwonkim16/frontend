@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caht with jw-Kokoa clone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/44659a0145.js" crossorigin="anonymous"></script>
+</head>
+<body id="chat-screen">
+    <div class="status-bar"> <!--BEM이라는 규칙을 따라 class명 작성, id보다 class name을 주기로 개발자들끼리 약속--><!--일일이 id인지 class인지 찾지 않아도 됨-->
+        <div class="status-bar__column">
+            <span>NO Service</span>
+            <i class="fa-solid fa-wifi"></i> <!--icon class name은 사이트에서 정해준대로..임의로 바꾸면 icon적용x-->
+            <!--Heroicons 또는 FontAwesome(여기가 더 좋은듯)이라는 사이트에서 icon검색 및 가져오기!! -->
+        </div>
+        <div class="status-bar__column">
+            <span>18:43</span>
+        </div>
+        <div class="status-bar__column">
+            <span>110%</span>
+            <i class="fa-solid fa-battery-full fa-2x"></i> <!--fontawesome에 아이콘 크기 조절 옵션 : ex) fa-2x와 같이-->
+            <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+    </div>
+    <header class="alt-header">
+        <div class="alt-header__column">
+            <a href="chats.html">
+                <i class="fa-solid fa-angle-left fa-2x"></i>
+            </a>
+        </div>
+        <div class="alt-header__column">
+            <h1 class="alt-header__title">김지원</h1>
+        </div>
+        <div class="alt-header__column">
+            <span><i class="fa-solid fa-magnifying-glass fa-2x"></i></span>
+            <span><i class="fa-solid fa-bars fa-2x"></i></span>
+        </div>
+    </header>
+
+    <main class="main-screen main-chat">
+        <div class="chat__timestamp">
+           Monday, July 17, 2023
+        </div>
+
+        <div class="message-row">
+          <img src="screenshots/1.jpg">
+          <div class="message-row__content">
+            <span class="message__author">진보라</span>
+            <div class="message__info">
+                <span class="message__bubble">Hi!</span>
+                <span class="message__time">21:27</span>
+            </div>      
+          </div>
+        </div>
+        <div class="message-row message-row--own">
+            <div class="message-row__content">
+              <div class="message__info">
+                  <span class="message__bubble">Hi! nice meet you!</span>
+                  <span class="message__time">21:27</span>
+              </div>      
+            </div>
+          </div>
+    </main> 
+<!--vscode 단축키!! nav>ul>li>*4>a 엔터!-->
+    <form class="reply">
+        <div class="reply__column">
+            <i class="fa-regular fa-square-plus fa-lg"></i>
+        </div>
+        <div class="reply__column">
+            <input type="text" placeholder="Write a message...">
+            <i class="fa-regular fa-face-smile"></i>
+            <button>
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+        </div>
+    </form>    
+    <div id="no-mobile">
+        <span>Your screen is too big ㅠㅠ</span>  <!--휴대폰 화면에서만 볼 수 잇도록, 큰화면으론 못보게끔 하려고 함.-->
+    </div>
+</body>
+</html>

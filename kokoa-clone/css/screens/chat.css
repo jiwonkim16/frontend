@@ -1,0 +1,164 @@
+#chat-screen{
+    background-color: #abc1d1;
+    height: 500vh;
+}
+#chat-screen .status-bar,
+#chat-screen .alt-header{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #abc1d1;
+}
+
+#chat-screen .status-bar{
+    z-index: 1;  /*z-index는 기본적으로 div가 있는 위치가 맨 앞에서부터 몇번째인지를 나타냄. position이 fixed나 absolute 되어 있으면 layer를 갖게 되고 z-index를 통해 몇번째 layer인지를 나타낼 수 있음.*/
+}
+
+@keyframes fadeIn {
+    from{
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to{
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.main-chat{
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.8s linear;
+}
+
+.chat__timestamp{
+    color: white;
+    border: none;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 8px 10px;
+    margin-bottom: 25px;
+    
+}
+
+.message-row {
+    width: 100%;
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.message-row img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.message__author{
+    display: block;
+    margin-bottom: 8px;
+}
+
+.message__bubble{
+    padding: 13px;
+    background-color: white;
+    border-radius: 15px;
+    border-top-left-radius: 0px;  /* border의 좌측 상단 radius만 각지게 */
+    margin-right: 5px;
+}
+.message__info{
+    display: flex;
+    align-items: flex-end;
+}
+.message__author,
+.message__time{
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+
+.message-row--own{
+    justify-content: flex-end;
+}
+
+.message-row--own .message__bubble {
+    background-color: var(--yellow);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 15px;
+}
+/*flex컨테이너 아래 flex chlidren의 순서를 바꾸고자 하면 display방식을 바꿀 수 있음.
+바로 아래처럼 order를 사용해서!! 이 order는 무조건 flex children에게만 적용됨.
+.message-row--own .message__bubble{
+    order: 1;
+}
+.message-row--own .message__time{
+    order: 0;
+}
+이렇게 코드가 많아서 불편하다면 대신에 flex컨테이너에 flex-direction: row-revers해달라고 하는게 훨씬 간편함.*/
+
+.message-row--own .message__info{
+    flex-direction: row-reverse;
+}
+.message-row--own .message__bubble{
+    margin-left: 5px;
+}
+
+.reply {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 25px;
+    align-items: center;
+    box-sizing: border-box;
+}
+.reply .reply__column:first-child{
+    width: 10%;
+}
+.reply .reply__column:last-child{
+    width: 90%;
+    position: relative;
+}
+.reply input {
+    padding: 11px;
+    width: 100%;    /* 100vh = The screen's height,  100vw = The screen's width,  100% = 100% of the PARENT*/
+    border: var(--main-border);
+    border-radius: 20px;
+}
+.reply__column:last-child > i, .reply__column:last-child button {
+    position: absolute;
+    right: -10px;
+    top: 5px;
+}
+
+.reply__column:last-child > i{
+    right: 30px;
+    top: 13px;
+}
+.reply__column button{
+    background-color: var(--yellow);
+    border:none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.reply__column button i{
+    opacity: 1;
+}
+.reply__column button:focus,
+.reply__column button:active{
+    outline: none;
+}
+
+.reply i {
+    opacity: 0.5;
+}
+
+/* focus-within은 element 내부에 focus된 element가 있는지 확인할때 사용 */

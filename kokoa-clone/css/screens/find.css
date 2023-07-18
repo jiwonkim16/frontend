@@ -95,3 +95,26 @@
 .open-post__heart-conunt span{
     margin-left: 5px;
 }
+
+@keyframes heartBeat{
+    0%{
+        color: white;
+        transform: none;
+    }
+    50%{
+        color: tomato;
+        transform: scale(2);
+    }
+    100%{
+        color: white;
+        scale: none;
+    }
+}
+.open-post__heart-conunt:hover i{
+    will-change: transform;
+    animation: heartBeat 1s linear infinite;
+}
+
+/*will change라는 프로퍼티는 기본적으로 브라우저에게 뭔가가 바뀔거라고 말해줌. 그럴때 애니메이션을 좀 더 낫게 만듬.
+일종의 help역할, 어떤게 바뀔건지 넣어주면됨.
+이걸 쓴 이유는 하트가 커지고 작아질때 약간의 흔들림이 있어서 그걸 잡고자 사용해봄.*/

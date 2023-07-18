@@ -24,6 +24,19 @@
     position: absolute;  /*position: absolute를 쓰려면 부모요소에 position:relative 가 있어야 한다는거 기억!!*/
     left: 15px;
     bottom: 15px;
+    animation: notificationAnimation 3s ease-in-out infinite;
+}
+
+@keyframes notificationAnimation {
+    0%{
+       transform: none;
+    }
+    50%{
+        transform: translateY(-5px) rotateY(180deg);
+    }
+    100%{
+        transform: none;
+    }
 }
 .nav__ellipsis{
     background-color: tomato;
@@ -33,4 +46,31 @@
     position: absolute;  /*position: absolute를 쓰려면 부모요소에 position:relative 가 있어야 한다는거 기억!!*/
     left: 25px;
     bottom: 30px;
+}
+
+@keyframes appearBtnAnimation{
+    from{
+        opacity: 0;
+    }
+    to{
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.nav__btn{
+    transform: translateY(80px);  /*animation이 아니라 여기에 transform을 준 이유는 아래 각btn이 서로 다른 시점에서 애니메이션이 실행되기 때문에 모두 다 같은 위치에서 시작하지 않음.
+    예를 들어 마지막 버튼은 1.5초 뒤에 실행되는데 그때까지 원래 자리에 잇다가 실행되기 때문에 원하는 애니메이션대로 실행되지 않아
+    처음부터 위치를 아래로 내려준 다음 애니메이션 실행.*/
+    opacity: 0;
+    animation: appearBtnAnimation 1s ease-in-out forwards;
+}
+.nav__btn:nth-child(2){
+    animation-delay: 0.5s;
+}
+.nav__btn:nth-child(3){
+    animation-delay: 1s;  /*nav의 각btn에 딜레이를 줌으로써 각기 다른 시점에 animation실행*/
+}
+.nav__btn:last-child{
+    animation-delay: 1.5s;
 }

@@ -1,0 +1,24 @@
+#no-mobile{
+    position: absolute;
+    z-index: 99;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--yellow);
+    display: flex;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 500;
+    box-sizing: border-box;
+    margin-left: -25px;
+}
+
+@media screen and (max-width:645px){
+    #no-mobile{
+        display:none;
+    }
+}  /*미디어 쿼리 활용방법임. 모든 html에 id가 no-mobile인 div를 넣어주고 위와 같이 스타일.
+그리고 미디어 쿼리를 활용해서 최대 화면 너비가 645px 즉, 최대로 키울 수 있는 너비가 645px이고 사용자의 입장에서 645px 이상을 넘어가면
+no-mobile div가 뜨도록 설정.
+*/

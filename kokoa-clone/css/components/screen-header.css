@@ -27,3 +27,24 @@
     left: 95px;
     bottom: 15px;
 }
+.more-header__gear{
+    background-color: tomato;
+    width: 5px;
+    height: 5px;
+    border-radius: 15px;
+    position: absolute;  /*position: absolute를 쓰려면 부모요소에 position:relative 가 있어야 한다는거 기억!!*/
+    left: 145px;
+    bottom: 15px;
+}
+
+@keyframes rotateCog{
+    from{
+        transform: none;
+    }
+    to{
+        transform: rotateZ(360deg);
+    }
+}
+.screen-header__icons .fa-gear:hover{
+    animation: rotateCog 1s linear infinite;
+}

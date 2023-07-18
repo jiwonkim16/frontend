@@ -29,3 +29,32 @@
     justify-content: space-between;
     color: var(--text-color);
 }
+
+@keyframes hideSplashScreen {  /*@keyframes는 CSS에서 애니메이션을 정의하는 데 사용되는 규칙입니다. @keyframes를 사용하면 원하는 이름으로 애니메이션 프로세스를 만들고, 시작 상태에서 최종 상태까지의 중간 상태를 지정할 수 있습니다. 그런 다음 해당 애니메이션을 HTML 요소에 적용할 수 있습니다*/
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+        visibility: hidden; /*display:none과 동일하게 html element가 살아있지만 이 스타일은 마우스에 걸리적거리지 않아 클릭할 수 있음.
+        단, 이 경우엔 js를 쓰지 않기때문에 이렇게 설정한거지 원래는 js를 써야함.*/
+    }
+}
+
+#splash-screen {
+    background-color: var(--yellow);
+    position: absolute;
+    height: 100vh;  /* 화면높이의 100%*/
+    width: 100vw;  /* 화면너비의 100%*/
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 132px;
+    z-index: 3;
+    box-sizing: border-box;
+    margin-left: -25px;
+    animation: hideSplashScreen 0.4s ease-in-out forwards; /*forwards는 애니메이션의 마지막 상태를 유지하여 요소가 원래 상태로 돌아가지 않게끔 해줌
+    이 경우엔 opacity:0과 visibility: hidden을 유지시켜줌.*/
+    animation-delay: 0.5s; /*2초의 딜레이 이후에 시작되며, 0.4초동안 실행됨.*/
+}
