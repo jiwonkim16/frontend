@@ -1,0 +1,76 @@
+.father{
+    display: grid; /*flex와 마찬가지로 부모요소에 display:grid를 지정하고 아래 자식요소들을 컨트롤함.  격자무늬*/
+    /*그리고 그리드는 flex-warp:wrap 과 같이 지정해둔 열의 크기를 넘어가면 자동으로 아래줄로 다음 요소가 들어감.*/
+    grid-template-columns: 250px 250px 250px 250px;  /*repeat(4, 250px)로 대체 가능*/ /*auto는 가능한 만큼 크게!*/ /*column이 수직이라고 가정하면
+    수직 방향으로 4개의 행을 만들고 각 크기를 250px로 만든다!*/
+    grid-template-rows: 100px repeat(3, 200px); /* 수평방향이라고 가정하면 4개의 열을 만들고 크기를 첫번째 열은 100px 나머지 3개 열은 200px 크기로.*/
+    column-gap: 10px; /* 각 행마다 10px의 간격을 둠. */
+    row-gap: 10px;/*각 열마다 10px간격을 둠.*/
+    /*gap: 10px; *//*column과 row를 각각 안쓰고 한번에 쓸때 사용*/
+    grid-template-areas:  /*그리드만 이용해서 layout을 만들 수 잇음!!*/
+    "header header header header"
+    "content content . nav" /* . 이 있는 공간은 빈 칸이 됨.*/
+    "content content content nav"
+    "footer footer footer footer";  /*이렇게 하면 아무런 변화가 안생김. 이유는 header와content, nav, footer가 뭔지를 모르기 때문
+    그래서 각 요소에 grid-area지정을 해줘야 함. 아래 참고!!*/
+}
+
+.header{
+    grid-area: header;
+}
+.content{
+    grid-area: content;
+}
+.nav{
+    grid-area: nav;
+}
+.footer{
+    grid-area: footer;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------*/
+.grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4,100px);
+    grid-template-rows: repeat(4,100px);
+}
+/*grid-template-area를 안쓰고 layout을 만들 수도 있음.
+이때 아래 요소들에게 각각 column과 row가 어디서 시작하고 어디서 끝날지 얘기해주면 됨.*/
+
+.header {
+    grid-column-start: 1; /* area와 같은 모양이려면 1→1*/
+    grid-column-end: 2; /* area와 같은 모양이려면 1→5*/
+} /*이렇게 지정해주면 아무 변화도 안생기는데 이유는 grid-column-start와 end는 각 column을 의미하는게 아니라 line을 의미함.
+그래서 첫번째 줄에서 시작해서 두번째 줄에서 끝난다고 이해하면되며, 박스의 첫번째 세로줄에서 2번째 세로줄까지니까 그냥 처음 박스모양이 그대로 유지가 되는 것!!
+그래서 end를 3을 주면 모양이 변하는데 2번째 박스의 첫번째 줄까지 차지함. */
+
+.content{
+    grid-column-start: 1;  /*좀더 짧게 쓰는 방법(shortcut)→ grid-column : 1 / 4; */
+    grid-column-end: 4; 
+    grid-row-start: 2; /*위 방법보다 좀 더 쉽게하는 방법 → 시작부터 끝나는 라인까지 일일히 셀 필요없이 어디부터 시작이고 어디가 끝인지 알면 됨..
+    예를 들어 4x4 grid가 있을 때 line 순서는 1,2,3,4,5 이고 끝에서 부터 -1,-2,-3,-4,-5 이렇게 셀 수 있음. 즉 맨 마지막 line은 5도 될 수 있지만 -1도 됨.
+    그래서 grid-row : 2 / -2 와 같이 쓸 수 있음!*/
+    grid-row-end: 4;
+}
+
+.nav {
+    grid-row-start: 2; /*또 좀 더 지름길이 있음!! → 시작과 끝을 적는 대신에 span을 사용할 수 있음. span은 시작점과 끝점을 적는걸 대신함. 얼마나 많은 cell을 갖는지임.
+    .nav의 경우 grid-row : span 2 와 같이 쓸 수 있음. 단, 간혹 시작지점을 적어줘야 할때도 있는데 그때는 grid-row: 2 / span 2; 와 같이 적어줌. 의미는 2번째 line부터 시작해서 2개의 cell에 적용.*/
+    grid-row-end: 4;
+}
+.footer{
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+/*이렇게 설정하면 아까 area를 쓴 것과 같은 모양이 됨!!*/
+
+/*--------------------------------------------------------------------------------------------------------------*/
+
+/*각 line에 naming을 해줄 수 있음. 그러나 잘 사용하지는 않음.
+만약 이름을 붙이고 싶다면.. grid-template-columns: [first-line] 100px [sexy-line] 200px....과 같이 이름을 붙일 수 있고
+grid-column: fist-line / sexy-line; 과 같이 사용가능!*/
+
+#2.7 grid-template 다시 봐야함!!
+#2.8도..place-items

@@ -9,7 +9,7 @@ const click = document.querySelector('.click_btn')
 const choseNumber = document.querySelector('.chose_number')
 const machineNumber = document.querySelector('.machine_number')
 
-function handleDisplayOn(){ // handleDisplayOn() 함수에서 .display 대신에 .style.display 사용
+function handleDisplayOn(event){ // handleDisplayOn() 함수에서 .display 대신에 .style.display 사용
     event.preventDefault()  // 그리고 기본 이벤트 동작을 막기 위해 클릭 이벤트에 preventDefault()를 호출
    //input type="submit"을 사용하면 폼 전송 시 페이지가 새로고침 되므로, 이를 방지하기 위해 event.preventDefault()나 button type="button" 사용합니다.
     chose.style.display = "block"
