@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Stayby16</title>
+    <script src="https://kit.fontawesome.com/44659a0145.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <header>
+        <div class="current">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="current__location"></span>
+            <i class="fa-solid fa-temperature-three-quarters fa-lg"></i>
+            <span class="current__weather">what is now weather</span>
+        </div>
+    </header>
+
+    <main>
+        <div>
+            <h1 class="clock"></h1>
+        </div>
+        <form class="login">
+            <input type="text" required placeholder="Write Your Name" class="login__input" maxlength="15">
+            <input type="submit" value="입력하기" class="submit login__submit">
+        </form>
+        <h1 id=greeting class="hidden"></h1>
+        
+        <form class="todo__hidden hidden">
+            <input type="text" placeholder="해야할 일" required class="todo-input__hidden" maxlength="15">
+            <input type="submit" value="입력하기" class="submit submit__hidden" onclick="save__todo()"> 
+        </form>
+        <div class="todoList__hidden todoList__screen">
+            <ul class="todo-list"></ul>
+        </div>
+    </main>
+    
+    <script src="./index.js"></script>
+
+    <div id="no-mobile">
+        <span>Your screen is too smallㅠㅠ</span>
+    </div>
+</body>
+</html>
