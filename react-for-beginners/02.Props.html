@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Props는 일종의 방식.
+    // 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방법.
+    // 컴포넌트라고 하는건 단지 어떤 JSX를 반환해주는 함수일 뿐임.(아직은..)
+    // 예를 들어 어떤 회사가 어플리케이션을 만든다고 가정하면 여러 버튼이 필요할 텐데
+    // 리액트 컴포넌트를 재사용하면 편리할 것 같지만 모르기 때문에 우리는 일단 우리가 아는 방법으로 버튼마다 컴포넌트를 만들어 줄거임.
+    //     function SaveBtn() {
+    //  return <button>Save Changes</button>;
+    // }
+    // 이렇게 버튼마다 컴포넌트를 만들고 부모 컴포넌트의 return 내에 <SaveBtn /> 와 같이 함수를 불러냄.
+    // 이런걸 바로 함수형 컴포넌트라고 부름. return 내부는 JSX의 내부라고 부름.
+    // 여튼 버튼의 스타일을 변경하고자 한다면 각 버튼마다 style property을 줘야함..style={{backgroundColor: "tomato",
+    // color: "white", padding : "10px"}} 머 이런식으로 자바스크립트 오브젝트 형식.
+    // 각 버튼마다 이런식으로 속성을 주거나 복붙한다면..좀 별로지..
+    // 어차피 버튼 마다 text만 다르고 스타일은 갖다면 이런 스타일을 모두 갖는 단 한가지의 컴포넌트만 만들 수 잇다면
+    // 얼매나 좋을까? 그래서 이제부터 그런 컴포넌트를 만들어 보겠음!
+
+    // Btn 이란 컴포넌트를 만들엇는데 텍스트를 바꾸려면 어케 해야 할까?? 우리는 여태 html에서 src="" type="" 와 같은
+    // syntax를 자주 사용했는데 그래서 이 syntax를 우리의 커스텀 컴포넌트에 적용해 볼 수 있을 듯!!!
+    // <Btn text="Save Changes" /> 요런 식으로 작성할 수 있고 여기서 text는 꼭 text라 안하고 banana 라던지 맘대로 작명가능.
+    // 이게 바로 우리가 부모 컴포넌트에 데이터를 전달시킬 수 있는 방법이 될 듯!!
+    // 또 이게 바로 <Btn /> 얘네들을 설정하고 또 재사용할 수 있는 방법이 되겠다!!
+    // 그런데 위와 같이 해도 변하는게 없음..ㅠ 왜냐하면 우리는 부모 컴포넌트로부터 text라는 새로운 정보를 자식 컴포넌트인
+    // Btn에게 보냈는데 이 Btn은 text를 사용하고 있지 않기 때문.
+    // 우리가 만들고 사용하는 모든 컴포넌트들은 ()로 argument를 받을 수 있음.(리액트가 넣어줌)
+    // 첫번째 argument는 마음대로 작명이 가능함. 사람들은 이 인자를 props라고 부름. Btn으로부터 전달받는 properties라는 의미.
+    // 그러니까 부모 컴포넌트에서 <Btn text="Save Changes" /> 이렇게 쓰는 건 결국 Btn()함수를 불러서 text 라는 인자를 보내는 것과
+    // 같은 것임. 왜냐! Btn은 함수이기 때문!!
+    // 그래서 어떤 prop이던 우리가 Btn 컴포넌트에 보내면 첫번째 argument에 저장됨. (첫번째 argument를 콘솔에 찍으면 알수 있다.)
+    // <Btn text="Save Changes" />를 react.js가 처리하는 방식은 Btn({text:"Save Changes"}) 이런 식으로 함수를 불러서 argument에 저장.
+    // 두번째 argument는 없음. 오직 props라는 하나의 인자만 존재하며, 그 props는 우리가 부모 컴포넌트에서 보밴 모든 것들을 갖는
+    // 오브젝트가 됨!!
+
+    // 그럼 이제 text를 사용해볼건데 props란 오브젝트는 text라는 key를 갖고 잇음.
+    // 그래서 버튼의 content부분을 {props.text} 로 바꿔주면 원하는 결과가 출력됨.
+    // 그런데 신기하게도 우리는 2개의 버튼에 대해 같은 Btn 컴포넌트를 사용하지만 이 버튼들은 App컴포넌트에 의해 설정됨.
+    // 그래서 서로 설정한대로 UI가 다름. 그야말로 재사용이 가능하게 하는 것임.
+    // 그리고 props를 잘 쓰지 않고 좀더 축약해서 쓰는데, props가 오브젝트인걸 알기 때문에 오브젝트로부터 key에 해당하는
+    // value값을 받아오려면 {text} 이런식으로 쓰면 됨. 이건 단지 property를 오브젝트로부터 꺼내는 shortcut임. 많이 사용하니 기억.
+
+    // 음 그리고 이런 기능들을 활용해서 각 버튼마다 글씨크기를 다르게 하고 싶다 하면 <Btn />에 아무 속성이나 주고
+    // 삼항연산자로 ~~면 fontsize는 크게 그게 아니면 fontsize는 작게 하라고 할 수 있을 것 같은데?
+    // <Btn text="Save Changes" big={true} /> 이렇게 true값 또는 false값을 임의 속성명을 만들어서 주고
+    // function Btn({ text, big }) Btn함수에도 big을 추가해서 콘솔에 {text, big}을 찍어보면
+    // Save Changes true  요롷게 출력되니까.. fontSize: big ? 20 : 15,   style property에 이런
+    // 조건식을 써주면 끗.
+
+    // function Btn({ text, big }) {
+    //   console.log(text, big);
+    //   return (
+    //     <button
+    //       style={{
+    //         backgroundColor: "tomato",
+    //         color: "white",
+    //         padding: "10px",
+    //         border: 0,
+    //         borderRadius: 10,
+    //         fontSize: big ? 20 : 15,
+    //       }}
+    //     >
+    //       {text}
+    //     </button>
+    //   );
+    // }
+    // function App() {
+    //   return (
+    //     <div>
+    //       <Btn text="Save Changes" big={true} />
+    //       <Btn text="Continue" big={false} />
+    //     </div>
+    //   );
+    // }
+    // const root = document.getElementById("root");
+    // ReactDOM.render(<App />, root);
+
+    // ---------------------------------------------------------------
+
+    // 이번엔 props에 또 어떤걸 넣어볼 수 있느지를 볼거임.
+    // 위에서 한건 불리언타입, string을 해봤는데 함수도 넣을 수 있음.
+    // 그리고 부모 컴포넌트가 state를 변경할 때 어떤 일이 일어나는지도 알아보자.
+
+    // 그래서 뭘 할거냐면 내 Btn들에게 onclick function을 달아주고 싶음.
+    // onclick function는 App 컴포넌트에 있는 뭔가의 state를 바꾸게 될거임.
+
+    // 먼저 부모 컴포넌트에 state를 생성하고  const [value, setValue] = React.useState("Save Changes");
+    // state의 기본값을 "Save Changes"로 넣어줌. 그리고 Btn의 "text"를 state에 연결. {value}
+    // changeValue 라는 함수는 setValue함수를 이용해서 초기값을 "Revert Changes"로 바꾸는 역할.
+    // 이 함수를 <Btn />의 onClick으로서 Btn 컴포넌트에 보낼거임.
+    // <Btn text={value} onClick={changeValue} />
+    // 그럼 이 값을 받은 Btn 컴포넌트에서는 onClick 이벤트를 넣어줘야 이벤트가 실행됨.
+    // <button onClick={onClick} ....생략>  이런식
+
+    // 여기서 주의사항!!!! <Btn text={value} onClick={changeValue} />에서의 onClick은
+    // 그냥 우리가 임의로 붙여준 props 이름이지 이벤트가 아님!!!
+    // 자식 컴포넌트 JSX내부에 넣어주는게 이벤트리스너임!!! 헷갈리지 말길..ㅎ
+
+    // 이제 언제 버튼이 re render 되는지 함 알아보자  --> console.log(text, "was rendered")
+    // 그 결과 Save Changes was rendered 와 Continue was rendered 란게 출력됨.
+    // 여기까진 문제가 없어보이는데 버튼을 클릭하면
+    // Revert Changes was rendered 와 Continue was rendered 가 출력 됨.
+    // 물론 Revert~~~~ 는 새로운 값이니 렌더링 되는 것이 당연하지만 Continue~~~는
+    // 변하는 것이 없는데..
+    // ⭐⭐⭐ 매우 중요하니 꼭 명심하시길. 이유는 부모 컴포넌트는 state가 변경될때, JSX 내부에
+    // 자식 컴포넌트들이 렌더링 되어있다면 모든 자식들은 전체가 re-rendering 됨!!!
+    // 그런데 이렇게 매번 전체가 리렌더링 되면 최적화 면에서 상당히 비효율적일 것 같지 않음??
+
+    // 그래서 react.js는 어플리케이션을 최적화 시키는 여러 기능들을 갖고 있기 때문에 짱이란 겨.
+    // 만약 props가 변경되지 않는다고 하면 컴포넌트가 다시 그려지는 것을 원치 않길
+    // 결정할 수 있음. React.memo 란 기능을 통해서. (memo는 memorized의 약자)
+    // const MemorizedBtn = React.memo(Btn); 로 기존 Btn으로 Btn컴포넌트를 만들고
+    // <MemorizedBtn text={value} onClick={changeValue} /> <MemorizedBtn text="Continue" />
+    // 위와 같이 부모 컴포넌트 내 JSX를 변경.
+    function Btn({ text, onClick }) {
+      console.log(text, "was rendered");
+      return (
+        <button
+          onClick={onClick}
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px",
+            border: 0,
+            borderRadius: 10,
+          }}
+        >
+          {text}
+        </button>
+      );
+    }
+    const MemorizedBtn = React.memo(Btn);
+    function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => {
+        setValue("Revert Changes");
+      };
+      return (
+        <div>
+          <MemorizedBtn text={value} onClick={changeValue} />
+          <MemorizedBtn text="Continue" />
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+
+    // "Props Types" 에 대한 얘기를 해보쟈
+    // 만약 컴포넌트들을에 매우 많은 props가 있다면 문제가 될 수 있겟죠?
+    // 다른 타입을 보낸다던가 등등 문제가 생길거임.
+    // 그러면 리액트가 각 props에 대해 다른 타입이 입력됬을 때 문제를 알려주면 좋지않을까??
+    // 우리는 text가 string이 되길 원하고 fonSize는 number가 되기를 원함.
+    // 리액트에 Props Types란 패키지가 있는데 Props Type은 우리가 어떤 타입의 prop을
+    // 받고 있는지를 체크해줌.
+    // <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"> 을 import해주고
+    // React.js에게 우리의 prop들의 타입이 무엇인지 알려줄거임.
+    // 우리의 컴포넌트 이름을 가져와서 props의 타입이 뭐고 어떤 모양이어야 하는지를 우리가 설명해줄 수 잇음.
+    // (철자 주의. props가 아니라 prop임.)Btn.propTypes = {text : PropTypes.string, fontSize : PropTypes.number}
+    // 이런식으로 prop이름과 타입을 써 줄 수 있음. 그럼 최소한 잘못된 타입이 prop에 들어가면
+    // 리액트가 에러를 반환함. 그럼 우리는 거기서 실수가 잇었구나를 알 수 있음.
+    // 또한, 정말정말 확실히 하고 싶다면(무조건 prop들이 있어야한다고 확신한다면)
+    // text : PropTypes.string.isRequired 처럼 .isRequired를 붙여주면 됨.그럼 만약 해당 props의 값이 없거나 타입이 틀릴때,
+    // 에러를 반환.
+    // 아 그리고 초기값 설정도 가능한데 이건 리액트여서가 아니라 자바스크립트이기 때문에 가능함.
+    // function Btn({ text, onClick, fontSize=14 }) {....생략} 요기 argument에 기본값을
+    // 줄 수 있음. 그럼 만약 fontSize에 대한 props 값이 없다면 위 기본값이 반영됨.
+    // 아 물론 style 속성에 fontSize : fontSize 란 속성은 있어야겟죠?>ㅎ
+  </script>
+</html>
