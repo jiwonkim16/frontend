@@ -207,8 +207,13 @@ div {
   ✅  foucs-within은 다른 states와 달리 부모에 적용됨
   즉, focused 상태인 자식을 가진 부모 element에 적용
   ✅  state를 다른 element와 연계해서 사용가능
-      ⚠️ 예를 들어 form:hover input {
+      ⚠️ 예를 들어 1) form:hover input {
             background-color : seagreen;}는 form이 hover 상태가 되었을 때 input의 배경색이 seagreen이 되도록 해라 라는 의미
+        2) 부모와 자식의 state에 따라 조정
+        form:hover input:focus {
+        background-color: teal;
+        }
+        form 태그에 커서가 올라오고 input 태그가 포커스 될때 배경색 변경.    
 
 
   ⭐ Pesudo element
@@ -238,7 +243,7 @@ div {
 
 ⭐ Transition
 ✅어떤 상태에서 다른 상태로의 변화를 애니메이션으로 만드는 방법
-✅⭐⭐변화를 주는 state 과 사용하는데 state가 없는 요소에 붙어야 함
+✅⭐⭐변화를 주는 state 과 사용하는데 state가 없는 요소(a, a:hover 중 a에)에 붙어야 함
 ✅transition: 어떤 것을 변화하게 만들지, 얼마동안 변화가 일어나게 할지, ease-in-out은 나중에 설명
 ⚠️예시:  transition: background-color 10s ease-in-out;
 ✅더 많은 transition을 추가할 수도 있음
