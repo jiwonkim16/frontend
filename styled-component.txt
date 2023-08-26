@@ -1,0 +1,231 @@
+const BoxTwo = styled.div`
+  background-color: tomato;
+  width: 100px;
+  height: 100px;
+`;
+
+
+import styled from "styled-components"; 로 스타일 컴포넌트를 임포트하고
+const Father = styled.div`` 이런식으로 html태그를 지정.
+``  내부에는 css 형식이 들어감.
+
+그리고 적용하려면 컴포턴트 내 JSX내부에 <Father></Father> 이런식으로 내가 이름붙인걸 태그형식으로 쓰면 끗.
+그리고 검사창에서 class를 확인하면 랜덤한 클래스가 들어가 있어서 겹칠일도 없음!! 짱이다
+
+-----------------------------------------------
+동일한 속성이 반복되면 그냥 합쳐주고 싶잖아 그래서 컴포넌트가 prop에 의해 변경가능하도록 만들면..
+const Box = styled.div`
+  background-color: ${(props) => props.bgColor};
+  width: 100px;
+  height: 100px;
+`;
+return (
+      <Box bgColor="teal" />
+      <Box bgColor="tomato" />
+)
+
+이런식으로 JSX에서 변경할 속성 즉 prop을 보내고 컴포넌트에서 prop들을 받아서 적용.
+이때 bgColor라고 준 prop명이 같아야 하는거 주의!
+
+------------------------------------------
+확장!
+const Circle = styled(Box)`
+  border-radius: 50px;
+`; 
+이 코드가 뜻하는건 Circle의 스타일 속성을 만들건데 Box의 모든 속성을 들고 온 다음, 추가적으로 border-radius: 50px; 더해준다.
+
+-----------------------------------------
+
+다수의 컴포넌트를 다룰 때 도움이 될만한 몇가지 트릭!
+컴포넌트의 태그를 바꾸고 싶은데 스타일은 바꾸고 싶지 않을때?
+
+그럴때는 컴포넌트에 as="변경할 태그" 만 props로 추가해주면 됨.
+<Btn as="a" href="/">
+이 prop은 button styled component인 Btn을 사용할건데 html부분을 바꿔서 a로 전달한 것.
+
+그리고 또다른 트릭은 원한다면 const Father = styled.div`
+  display: flex;
+`; 여기서 html태그의 속성을 설정할 수 있다는 사실.
+---------------------------------------------------------------
+styled components가 컴포넌트를 생성할 때, 속성값을 설정할 수 있게 해줌.
+const Father = styled.input.attrs({required : true, minLength: 10})  이때 attrs는 attribute의 줄임말.
+이렇게 하면 Input으로 전달될 모든 속성을 가진 오브젝트를 담을 수 있음.
+
+---------------------------------------------
+styled components에서의 애니메이션 효과 주는 법은
+
+helper function을 import 해주는 것임.  import styled, {keyframes} from "styled-components"; 요롴케.
+
+그리고 아래와 같이 keyframes 라는 string으로 코드 작성. 이때 keyframes 옆에는 ``백틱이 들어와야 하는 점!
+그리고 애니메이션을 적용하는 컴포넌트에 animation: ${rotateAnimation} 5s linear infinite;요런식으로 작성해야 하는 점 기억!
+const rotateAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+    border-radius: 0px;
+  }
+  50%{
+    border-radius: 100px;
+  }
+  100%{
+    transform: rotate(360deg);
+    border-radius: 0px;
+  }
+`;
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: tomato;
+  animation: ${rotateAnimation} 5s linear infinite;
+`;
+
+------------------------------------------
+스타일 컴포넌트에서 쓰는 셀렉터!
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  span {
+    font-size: 36px;
+  }
+`;
+
+이렇게 작성하면 Box컴포넌트 안에 span태그를 지칭하는 것.
+
+즉, 모든 컴포넌트에 스타일 컴포넌트 처리를 해줄 필요가 없다는 의미임. 그냥 한 컴포넌트만 스타일처리해주고 다른 태그는 위처럼 target처리.
+
+그런데 이게 끝이 아니라 원한다면 :hover style을 만들 수 도 있다는 사실!
+
+평범한 css에서는 span:hover{}  요런 식이었지만 지금 보여줄건 평범한 css가 아님.
+
+^나 & 처리를 해줄 수 있음.
+
+span{
+&:hover{}
+}  
+이건
+
+span:hover {} 과 같은 의미! 
+
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  animation: ${rotateAnimation} 5s linear infinite;
+  span {
+    font-size: 36px;
+    &:hover {
+      font-size: 40px;
+    }
+  }
+`;
+
+--------------------------------------------------------------
+
+혹시나 html 태그를 바꾸면 적용이 안되겠지?? 그래서 위 span을 따로 컴포넌트로 만들고
+Box 컴포넌트에서 styled component 자체를 타겟팅 할 수 있도록 하면 위 코드가
+
+const Emoji = styled.span`
+font-size : 16px
+`
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  animation: ${rotateAnimation} 5s linear infinite;
+  ${Emoji} {
+    &:hover {
+      font-size: 40px;
+    }
+  }
+`;
+Emoji이름을 가진 Box안의 것들은 hover 됬을 때 글씨크가가 40px가 된다는 의미.
+만약 Box 밖에 있는 Emoji라면 해당 효과를 받지 못함.
+이런 식으로 ${} 안에 컴포넌트 명을 넣어서 다른 컴포넌트 안에서도 쓸수있음. 그리고 &로 축약하는 것도 가능.
+
+---------------------------------------------------------------------------------
+
+마지막으로 Themes !
+화면 dark모드 light모드를 구현한다면 50%는 theme역할임.
+
+Theme 이란, 기본적으로 모든 색상들을 가지고 있는 object를 뜻함.
+모든색깔을 하나의 object에 넣어놨기 때문에 매우매우 편리함.
+
+실행하기 위해선 index.js로 가서 ThemeProvider 이란 걸 styled-component로부터 import해줘야 함.
+import {ThemeProvider} from "styled-components" 이렇게..
+
+그리고나서 우리의 App을 ThemeProvider로 감싸줘야 함.
+root.render(
+  <React.StrictMode>
+    <ThemeProvider>
+    <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+요롷게. 그리고 ThemeProvider는 prop이 하나 필요한데 바로 theme이란 prop임.
+
+const darkTheme = {
+  textColor: "whitesmoke",
+  backgroundColor: "#111",
+};
+
+ <ThemeProvider theme={darkTheme}>
+---이렇게 설정해주고 나면 사용하는건 겁나 쉬움.
+아래와 같음!
+const Title = styled.h1`
+   color : ${props => props.theme.textColor};
+`
+타이틀이란 컴포넌트가 app컴포넌트 안에 있고 app컴포넌트는 theme provider안에 있기 때문에 내 title이 theme object에 접근해서
+textcolor를 얻을 수 있는 것!!
+
+
+정리하면 우리가 만든 darkTheme과 같이 property 몇개를 가진 오브젝트만 있으면 그걸 ThemeProvider에 전달하고
+ThemeProvider안에 모든 컴포넌트들은 이 오브젝트에 접근할 수 잇음.
+
+그리고 두개의 theme을 만들고 동일한 property이름을 갖고 있다면 우리가 theme을 전환해줄때, 컴포넌트를 따로 바꿔줄 필요없이 
+ThemeProvider에 전달하는 theme만 바꿔주면 다 바뀜. (ex. darkTheme, lightTheme) 
+
+
+
+------------------------------------------------------------------------
+
+const Title = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Emoji = styled.span`
+  font-size: 36px;
+`;
+
+const Box = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: tomato;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${Emoji}:hover {
+    font-size: 98px;
+  }
+  background-color: ${(props) => props.theme.backgroundColor};
+`;
+
+function App() {
+  return (
+    <Wrapper>
+      <Box>
+        <Emoji>🤩</Emoji>
+      </Box>
+      <Emoji>🔥</Emoji>
+      <Title>Hello</Title>
+    </Wrapper>
+  );
+}
