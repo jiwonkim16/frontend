@@ -1,7 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { fetchCoins } from "../api";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -41,7 +41,6 @@ const Coin = styled.li`
     }
   }
 `;
-// Link 에 css 먹일 때에도 a 태그에 css를 먹였는데 이유는 어차피 Link는 html에서 a로 읽는다.
 
 const Loader = styled.span`
   text-align: center;
@@ -72,28 +71,18 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const respone = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await respone.json();
-      setCoins(json.slice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
-  // 작은 꿀팁. 콜백함수 안에 또 함수가 들어갈 때 ()() 라고 쓰고 첫번째 ()안에 함수를 넣으면
-  // 바로 실행되는 함수가 됨.ㅎ
+  const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
+
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{

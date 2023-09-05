@@ -1,0 +1,217 @@
+useNavigate와 Link의 차이점??
+
+&nbsp;
+
+-------------------------------------
+createBrowserRouter
+
+Router를 array 형식으로 표현할 수 잇게 해줌.
+[] 안에 {} 넣고 첫번째 route를 생성하는데
+첫번째 route는 전체 route들의 컨테이너와 같은
+것이 들어갈 거임.
+
+<Outlet />
+children
+
+/ 는 부모
+children 내부에 있는 것을 자식이라고.
+createBrowserRouter
+
+모든 React Router 웹 프로젝트에 권장되는 라우터입니다.
+DOM History API를 사용하여 URL을 업데이트하고 기록 스택을 관리합니다.
+```
+const router = createBrowserRouter([
+{
+path: "/",
+element: < Root />,
+loader: rootLoader,
+children: [ { path: "team", element: < Team />, loader: teamLoader } ]
+},
+]);
+```
+https://reactrouter.com/en/main/routers/create-browser-router#createbrowserrouter
+
+
+아래는 Router.jsx 코드
+import { createBrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./screens/Home";
+import About from "./screens/About";
+import Root from "./Root";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+    ],
+  },
+]);
+
+export default router;
+
+
+
+
+Root.jsx 코드(App.jsx를 이해를 위해 이름변경)
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+function Root() {
+  return (
+    <div>
+      <Header />
+      <Outlet />
+    </div>
+  );
+}
+
+export default Root;
+
+index.jsx 코드
+import React from "react";
+import ReactDOM from "react-dom/client";
+import router from "./Router";
+import { RouterProvider } from "react-router-dom";
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(<RouterProvider router={router} />);
+
+<RouterProvider> 라는 컴포넌트를 넣어주고
+이 컴포넌트는 router라는 prop을 하나 가진다.
+거기에 Router.jsx에서 만들어준 router를 입력.
+
+-------------------------------------------------
+우리의 컴포넌트에 에러가 발생해서 충돌하거나
+위치를 찾지 못할 때 사용하는 errorElement.
+
+이 기능의 멋진점은 다른 컴포넌트들을
+또 다른 컴포넌트에서
+발생하는 문제로부터 보호해주는 역할.
+
+
+단, 이 기능은 createBrowserRouter 과 같은
+데이터 라우터를 사용하는 경우에만 작동.
+
+import { createBrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./screens/Home";
+import About from "./screens/About";
+import Root from "./Root";
+import NotFound from "./screens/NotFound";
+import ErrorComponent from "./components/ErrorComponent";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+        errorElement: <ErrorComponent />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+    ],
+    errorElement: <NotFound />,
+  },
+]);
+
+export default router;
+
+---------------
+import React from "react";
+
+function ErrorComponent() {
+  return <h1>This component crashed</h1>;
+}
+
+export default ErrorComponent;
+
+
+----------------------------------------------
+useNavigate 는 유저를 이동시키고 위치를 바꿈.
+다른 페이지로 이동시키는 또다른 방법인
+Link 는 유저가 클릭해야 하는 반면
+
+useNavigate는 유저를 로그인 시키거나 홈페이지;로
+이동시키고 싶을 때 사용. 클릭을 기다리지 않고.
+
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+function Header() {
+  const navigate = useNavigate();
+  const onAboutClick = () => {
+    navigate("/about");
+  };
+  return (
+    <header>
+      <ul>
+        <li>
+          <Link to={"/"}>Home</Link>
+        </li>
+        <li>
+          <button onClick={onAboutClick}>About</button>
+        </li>
+      </ul>
+    </header>
+  );
+}
+
+------------------------------------------------
+useParams
+--------------------------------
+Outlet
+Route 에 자식이 있다면 그 경우가 바로
+Outlet이 사용되는 경우다.
+Outlet이 이 스크린의 자식을 render하게 됨.
+
+
+Outlet 컴포넌트는 하위 경로 요소를 렌더링하기 위해
+상위 경로 요소에서 사용합니다.
+이렇게 하면 하위 경로가 렌더링될 때
+중첩된 UI가 표시될 수 있습니다. 
+상위 경로가 정확히 일치하면 하위 index 경로를
+렌더링하거나 index 경로가 없으면 아무것도
+렌더링하지 않습니다.
+ex) < Outlet />
+
+------------------------------------
+useOutletContext
+
+종종 상위 경로는 하위 경로와 state 또는
+기타 값을 공유합니다.
+원하는 경우 context provider를 만들 수 있지만
+Outlet에 기본 제공되는 context를 사용할 수도
+있습니다.
+```
+< Outlet context={ {a:1, b:2} } />;
+
+const context = useOutletContext(); // {a:1, b:2}
+```
+https://reactrouter.com/en/main/hoks/use-outlet-context
+
+----------------------------------------
+useSearchParams
+
+useSearchParams 훅은 현재 위치에 대한 URL의 쿼리 문자열을 읽고 수정하는 데 사용됩니다. useState 훅과 마찬가지로 useSearchParams는 현재 위치의 search params와 이를 업데이트하는 데 사용할 수 있는 함수라는 두 가지 값의 배열을 반환합니다.
+setSearchParams 함수는 탐색과 같이 작동하지만 URL의 검색 부분에 대해서만 작동합니다.
+```
+let [searchParams, setSearchParams] = useSearchParams();
+
+setSearchParams(params);
+```
+https://reactrouter.com/en/main/hooks/use-search-params
+
+?fav=yes&geo=123&something=true
