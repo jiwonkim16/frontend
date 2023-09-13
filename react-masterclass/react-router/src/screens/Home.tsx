@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { users } from "../db";
+import { setTokenSourceMapRange } from "typescript";
 function Home() {
+  const [readSearchParams, setSearchParams] = useSearchParams();
+  setTimeout(() => {
+    setSearchParams({
+      day: "today",
+      tomarrow: "123",
+    });
+  }, 3000);
   return (
     <div>
       <h1>Users</h1>
