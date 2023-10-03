@@ -1,8 +1,13 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useRef } from "react";
-const Wrapper = styled.div`
-  height: 100vh;
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
+import { useEffect, useRef } from "react";
+const Wrapper = styled(motion.div)`
+  height: 500vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -25,25 +30,25 @@ const BiggerBox = styled.div`
   align-items: center;
   overflow: hidden;
 `;
-const boxVariants = {
-  hover: { scale: 1.5, rotateZ: 90 },
-  click: { scale: 1, borderRadius: "100px" },
-};
 
 function App() {
-  const biggerBoxRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const rotateZ = useTransform(x, [-800, 800], [-360, 360]);
+  const gradient = useTransform(
+    x,
+    [-800, 0, 800],
+    [
+      "linear-gradient(135deg,#6083e4,#1111df)",
+      "linear-gradient(135deg,#e09,#d0e)",
+      "linear-gradient(135deg,#77e671,#056a1e)",
+    ]
+  );
+  const { scrollYProgress } = useViewportScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5]);
   return (
-    <Wrapper>
-      <BiggerBox ref={biggerBoxRef}>
-        <Box
-          drag
-          dragSnapToOrigin
-          dragConstraints={biggerBoxRef}
-          variants={boxVariants}
-          whileHover="hover"
-          whileTap="click"
-        />
-      </BiggerBox>
+    <Wrapper style={{ background: gradient }}>
+      <button onClick={() => x.set(200)}>Click me!</button>
+      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }

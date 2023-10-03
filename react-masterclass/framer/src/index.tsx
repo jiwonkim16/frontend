@@ -69,11 +69,9 @@ a {
 }
 `;
 ReactDOM.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <GlobalStyle />
-      <App />
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <GlobalStyle />
+    <App />
+  </RecoilRoot>,
   document.getElementById("root")
 );
