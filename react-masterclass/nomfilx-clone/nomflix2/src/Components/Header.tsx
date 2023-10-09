@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion, useScroll, useAnimation } from "framer-motion";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -62,7 +63,7 @@ const logoVariants = {
   },
 };
 
-const Search = styled.span`
+const Search = styled.form`
   color: white;
   display: flex;
   align-items: center;
@@ -84,6 +85,11 @@ const Input = styled(motion.input)`
   background-color: transparent;
   border: 1px solid ${(props) => props.theme.white.lighter};
 `;
+
+interface IForm {
+  keyword: string;
+}
+
 function Header() {
   const homeMatch = useMatch("/"); // useMatch() 훅은 우리에게 이 route 안에 있는지 다른 곳에 있는지를 알려준다.
   const tvMatch = useMatch("/tv");
@@ -115,6 +121,17 @@ function Header() {
       }
     });
   }, []);
+  const navigate = useNavigate();
+  // 검색창 기능 구현 (리액트 훅 폼 활용)
+  const { register, handleSubmit } = useForm<IForm>();
+  const onValid = (data: IForm) => {
+    // 유저를 다른 페이지로 이동시키기 위해 useNavigate() 훅 사용
+    // url에 ?~~ 를 사용하는 이유는?? -> query argument라고 하는데 ..
+    // search 페이지에서 keyword를 가지고 검색을 해야 하기 때문이다.
+    // search 페이지에서 해당 url에 있는 keyword 정보를 useSearchParams훅과
+    // useLocation을 활용해서 가져올 것이다.
+    navigate(`/search?keyword=${data.keyword}`);
+  };
   return (
     <Nav animate={navAnimation} initial={{ backgroundColor: "rgba(0,0,0,0)" }}>
       <Col>
@@ -147,7 +164,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={openSearch}
             animate={{ x: searchOpen ? -180 : 0 }}
@@ -163,6 +180,7 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
+            {...register("keyword", { required: true, minLength: 2 })}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
             animate={{ scaleX: searchOpen ? 1 : 0 }}
