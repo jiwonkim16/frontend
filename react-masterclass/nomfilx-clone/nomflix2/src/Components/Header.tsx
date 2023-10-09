@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useScroll, useAnimation } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
   height: 80px;
   font-size: 12px;
 `;
@@ -76,7 +75,14 @@ const Search = styled.span`
 const Input = styled(motion.input)`
   transform-origin: right center; // transform-origin 은 변화가 시작하는 위치를 의미한다.
   position: absolute;
-  left: -150px;
+  right: 0px;
+  padding: 5px 10px;
+  padding-left: 40px;
+  z-index: -1;
+  color: white;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 function Header() {
   const homeMatch = useMatch("/"); // useMatch() 훅은 우리에게 이 route 안에 있는지 다른 곳에 있는지를 알려준다.
@@ -88,8 +94,29 @@ function Header() {
   const openSearch = () => {
     setSearchOpen((prev) => !prev);
   };
+  const navAnimation = useAnimation();
+
+  // 스크롤을 움직일 때 header 부분 색상 변경하기를 구현하기 위해서 framer-motion에서 제공하는 useScroll 훅을 이용한다.
+  // useScroll은 모션 값을 주고 스크롤을 움직일 때 제일 밑에서부터 얼마나 멀리 있는지를 알려준다.
+  // useScroll은 2가지 값을 주는데 1. Progress 이며, 여기서 x,y에 대한 스크롤 진행도를 0부터 1사이의 값으로 알 수 있다.(scrollYProgress)
+  // 2. 얼마나 멀리 이동했는지 px 단위로 알려준다. (scrollY)
+  const { scrollY } = useScroll();
+  // scrollY의 값을 알아보기 위해 아래와 같이 작성
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > 80) {
+        navAnimation.start({
+          backgroundColor: "rgba(0,0,0,1)",
+        });
+      } else {
+        navAnimation.start({
+          backgroundColor: "rgba(0,0,0,0)",
+        });
+      }
+    });
+  }, []);
   return (
-    <Nav>
+    <Nav animate={navAnimation} initial={{ backgroundColor: "rgba(0,0,0,0)" }}>
       <Col>
         <Logo
           variants={logoVariants}
@@ -136,6 +163,7 @@ function Header() {
             ></path>
           </motion.svg>
           <Input
+            initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
             animate={{ scaleX: searchOpen ? 1 : 0 }}
             placeholder="Search for movie or tv show..."
