@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
@@ -38,7 +39,7 @@ const Item = styled.li`
     color: ${(props) => props.theme.white.lighter};
   }
 `;
-const Circle = styled.span`
+const Circle = styled(motion.span)`
   position: absolute;
   width: 5px;
   height: 5px;
@@ -61,11 +62,32 @@ const logoVariants = {
     },
   },
 };
+
+const Search = styled.span`
+  color: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+  svg {
+    height: 25px;
+  }
+`;
+
+const Input = styled(motion.input)`
+  transform-origin: right center; // transform-origin 은 변화가 시작하는 위치를 의미한다.
+  position: absolute;
+  left: -150px;
+`;
 function Header() {
   const homeMatch = useMatch("/"); // useMatch() 훅은 우리에게 이 route 안에 있는지 다른 곳에 있는지를 알려준다.
   const tvMatch = useMatch("/tv");
   console.log(homeMatch, tvMatch); // 콘솔에 pathname 등이 있는 객체를 반환한다. 만약 해당 route에 위치하지 않는다면 null을 반환
   // 하기 때문에 내가 현재 어디에 있는지 알 수 있다. 만약 내가 tvMatch에 있다면을 코드로 표현하고자 하면 tvMatch가 존재한다면 으로 작성할 수 있다.
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const openSearch = () => {
+    setSearchOpen((prev) => !prev);
+  };
   return (
     <Nav>
       <Col>
@@ -85,15 +107,40 @@ function Header() {
         </Logo>
         <Items>
           <Item>
-            <Link to="/">Home {homeMatch ? <Circle /> : null}</Link>
+            {/* 같은 layoutId를 가짐으로써 circle 이동에 애니메이션 효과가 생김 */}
+            <Link to="/">
+              Home {homeMatch ? <Circle layoutId="circle" /> : null}
+            </Link>
           </Item>
           <Item>
-            <Link to="/tv">Tv Shows{tvMatch ? <Circle /> : null}</Link>
+            <Link to="/tv">
+              Tv Shows{tvMatch ? <Circle layoutId="circle" /> : null}
+            </Link>
           </Item>
         </Items>
       </Col>
       <Col>
-        <button>Search</button>
+        <Search>
+          <motion.svg
+            onClick={openSearch}
+            animate={{ x: searchOpen ? -180 : 0 }}
+            transition={{ type: "linear" }}
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clipRule="evenodd"
+            ></path>
+          </motion.svg>
+          <Input
+            transition={{ type: "linear" }}
+            animate={{ scaleX: searchOpen ? 1 : 0 }}
+            placeholder="Search for movie or tv show..."
+          />
+        </Search>
       </Col>
     </Nav>
   );
