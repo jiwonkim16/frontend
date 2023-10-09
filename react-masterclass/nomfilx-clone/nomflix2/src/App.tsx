@@ -1,5 +1,13 @@
+import Header from "./Components/Header";
+import Router from "./Router";
+
 function App() {
-  return null;
+  return (
+    <>
+      <Header />
+      <Router />
+    </>
+  );
 }
 
 export default App;
